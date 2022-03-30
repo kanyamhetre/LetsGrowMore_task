@@ -1,0 +1,33 @@
+import pandas as pd
+df=pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")
+df.head()
+
+df.head()
+
+df.describe()
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize = (10,5))
+sns.scatterplot(data = df, s = 100, alpha = 0.7)
+plt.grid()
+plt.show()
+
+X=df[['sepal.length', 'sepal.width', 'petal.length', 'petal.width']]
+Y=df['variety']
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test= train_test_split(X,Y,test_size=0.2, random_state=5)
+
+from sklearn.linear_model import LogisticRegression
+classifier = LogisticRegression()
+classifier.fit(X_train, Y_train)
+print('Model Score: ', classifier.score(X_test, Y_test))
+
+y_pred = classifier.predict(X_test)
+y_pred
+
+from sklearn.metrics import confusion_matrix
+matrix = confusion_matrix(Y_test, y_pred)
+matrix
